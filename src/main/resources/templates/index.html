@@ -19,7 +19,7 @@
 
 
    <nav class="navbar navbar-expand-sm bg-light navbar-light" style="background-color: #e3f2fd;">
-       <a class="navbar-brand" href="/" style="margin-left: 90px">Wen</a>
+       <a class="navbar-brand" href="/" style="margin-left: 90px">问答</a>
        <ul class="navbar-nav">
 
 
@@ -31,7 +31,7 @@
                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
            </form>
            <li class="nav-item">
-               <p class="nav-link " th:if="${login}" th:text="${user_name}">用户名</p>
+               <p class="nav-link " style="margin-left: 90px" th:if="${login}" th:text="${user_name}">用户名</p>
            </li>
            <li class="nav-item">
                <a class="nav-link " th:if="${login}" href="/out" >退出登陆</a>

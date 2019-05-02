@@ -5,6 +5,7 @@ import com.zx.bs.model.Question;
 import com.zx.bs.model.User;
 import com.zx.bs.service.AnswerService;
 import com.zx.bs.service.QuestionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 //TODO 编写问题
-
+@Slf4j
 @Controller
 public class QuestionController {
 

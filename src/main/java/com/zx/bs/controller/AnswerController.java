@@ -4,6 +4,7 @@ import com.zx.bs.model.Answer;
 import com.zx.bs.model.User;
 import com.zx.bs.service.AnswerService;
 import com.zx.bs.service.QuestionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 //TODO 编写回答
-
+@Slf4j
 @Controller
 public class AnswerController {
     @Autowired
@@ -26,6 +27,7 @@ public class AnswerController {
     @ResponseBody
     public Integer addAnswer (Answer answer ,HttpSession session){
 
+        log.info(""+answer);
         //TODO 前端测试
         Integer result;
         if(session.getAttribute("user_id")!=null){
