@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>欢迎登陆</title>
+    <style type="text/css">
+        body{
+            background-color:#F6F6F6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="col-lg-6 offset-lg-3 well" >
+        <h1 class="text-center" style="margin-top: 40px">登陆</h1>
+        <form action="/login" method="post" >
+            <div class="form-group-lg">
+                <label  for="email"><h3>账户</h3></label>
+                <input type="text" class="form-control" id="email" name="user_id" />
+            </div>
+            <div class="form-group-lg">
+                <label for="password"><h3>密码</h3></label>
+                <input type="password" class="form-control" id="password" name="user_passwd" />
+            </div >
+        </form>
+        <div class="form-group-lg" id="app">
+            <button id="but2"  v-on:click="refreshMessage" class="btn btn-lg">登陆</button>
+            <button type="button"  class="btn btn-link btn-lg"><a href="/register.html">注册</a></button>
+            <label id="result"></label>
+        </div>
+    </div>
+</div>
+<script>
+    //vue
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods: {
+            refreshMessage: function () {
+                var dataid = $("input#email").val();
+                var datapwd = $("input#password").val();
+                $.ajax({
+                    url: '/login',
+                    type: 'POST', //GET
+                    async: true,    //或false,是否异步
+                    data: {
+                        user_id: dataid,
+                        user_passwd: datapwd
+                    },
+                    timeout: 5000,    //超时时间
+                    dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    beforeSend: function (xhr) {
+                        console.log(xhr);
+                        console.log('发送前');
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data == 1) {
+                            $("label#result").text("登陆成功");
+                            window.location.href = "/";
+                        }
+                        if (data == -1) {
+                            $("label#result").text("密码错误");
+                        }
+                        if (data == -2) {
+                            $("label#result").text("没有此账户");
+                        }
+                    },
+                    error: function (xhr, textStatus) {
+                        console.log('错误');
+                        console.log(xhr);
+                        console.log(textStatus)
+                    },
+                    complete: function () {
+                        console.log('结束');
+                    }
+                })
+            }
+        }
+    }
+    )
+
+</script>
+</body>
+</html>

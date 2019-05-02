@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+   <div class="container">
+       <div class="col-lg-6 offset-lg-3 well">
+           <h1 class="text-center" style="margin-top: 40px">注册</h1>
+           <form action="/registered" method="post" >
+               <div class="form-group-lg">
+                   <label for="email"><h3>账户</h3></label>
+                   <input type="text" class="form-control" id="email" />
+               </div>
+               <div class="form-group-lg">
+                    <label for="password"><h3>密码</h3></label>
+                    <input type="password" class="form-control" id="password" />
+               </div >
+               <div class="form-group-lg">
+                   <label for="name"><h3>昵称</h3></label>
+                   <input type="text" class="form-control" id="name" />
+               </div >
+
+           </form>
+           <div id="app" class="form-group-lg">
+               <button  v-on:click="refreshMessage" class="btn btn-lg">注册</button>
+               <button type="button"  class="btn btn-link btn-lg"><a href="/login.html">登陆</a></button>
+               <label id="result"></label>
+           </div>
+       </div>
+   </div>
+   <script>
+       new Vue({
+           el: '#app',
+           data: {
+               message: 'Hello Vue!'
+           },
+           methods: {
+               refreshMessage: function (){
+                   var dataid=$("input#email").val();
+                   var datapsw=$("input#password").val();
+                   var dataname=$("input#name").val();
+                   $.ajax({
+                       url:'/registered',
+                       type:'POST', //GET
+                       async:true,    //或false,是否异步
+                       data:{
+                           user_id:dataid,
+                           user_passwd:datapsw,
+                           user_name:dataname
+                       },
+                       timeout:5000,    //超时时间
+                       dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+
+                       success:function(data,textStatus,jqXHR){
+                           // if(data==1){
+                           //     window.alert("成功")
+                           // }
+                           if (data == 1) {
+                               $("label#result").text("注册成功");
+                               window.location.href = "/";
+                           }
+                           if (data == -1) {
+                               $("label#result").text("注册失败");
+                           }
+                       },
+                       error:function(xhr,textStatus){
+                           console.log('错误')
+                           window.alert("注册失败！")
+                           console.log(textStatus)
+                       },
+
+                   })
+               }
+           }
+       })
+   </script>
+</body>
+</html>
