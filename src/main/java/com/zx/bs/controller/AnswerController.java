@@ -64,7 +64,6 @@ public class AnswerController {
         Answer answer= answerService.findAnswerById(id);
         map.put("answer",answer);
         return new ModelAndView("answer",map);
-
     }
 
     //通过问题id查询回答，返回该问题的所有回答的列表
