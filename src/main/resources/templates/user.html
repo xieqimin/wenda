@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>个人中心</title>
@@ -9,8 +9,91 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        @import url("//unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css");
+        .el-header, .el-footer {
+            background-color: #B3C0D1;
+            color: #333;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            background-color: #F6F6F6;
+            color: #333;
+            text-align: center;
+
+        }
+
+        .el-main {
+            background-color: #E9EEF3;
+            color: #333;
+            text-align: center;
+
+        }
+
+        body > .el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 260px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 320px;
+        }
+
+    </style>
 </head>
 <body>
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/element-ui@2.8.2/lib/index.js"></script>
+<div id="app">
+
+    <el-container>
+        <el-header>Header</el-header>
+        <el-container>
+            <el-aside width="200px"></el-aside>
+            <el-container>
+                <el-main>
+                    <el-tabs type="border-card">
+                    <el-tab-pane label="我的提问">
+                        <tr th:each="qu:${question}">
+                            <td>
+                                <el-card class="box-card" style="margin-bottom: 10px; margin-top: 20px">
+                                        <p class="card-text" th:utext="${qu.question_conent}">Some example text. Some example text.</p>
+                                        <!--<a href="/question/{qu.question_id}" class="card-link">Card link</a>-->
+                                    <el-link type="primary" th:href="@{/question/{questionid}(questionid=${qu.question_id})}" class="card-link">查看回答</el-link>
+                                </el-card>
+                            </td>
+                        </tr>
+                    </el-tab-pane>
+                    <el-tab-pane label="我的回答">
+                        <tr class="list-group list-group-flush" th:each="ans:${answers}">
+                            <td class="list-group-item">
+                                <el-card class="box-card" style="margin-bottom: 10px; margin-top: 20px">
+                                    <p class="card-text" th:utext="${ans.answer_content}">Some example text. Some example text.</p>
+                                         <!--<a href="/question/{qu.question_id}" class="card-link">Card link</a>-->
+                                    <el-link type="primary" th:href="@{/remove/answer/{answerid}(answerid=${ans.answer_id})}" >删除回答</el-link>
+                                </el-card>
+                            </td>
+                        </tr>
+                    </el-tab-pane>
+                        <el-tab-pane label="个人信息"></el-tab-pane>
+                </el-tabs>
+                </el-main>
+
+            </el-container>
+            <el-aside width="200px"></el-aside>
+        </el-container>
+    </el-container>
+
+</div>
 
 </body>
+<script>
+    new Vue().$mount('#app')
+</script>
 </html>

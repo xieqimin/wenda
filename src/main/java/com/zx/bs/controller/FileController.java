@@ -25,9 +25,9 @@ public class FileController {
         String filePath = request.getSession().getServletContext().getRealPath("imgupload/");
         //
         //filePath="C:/Download/";
-        System.out.println(filePath);
-        System.out.println(fileName);
-        System.out.println(contentType);
+//        System.out.println(filePath);
+//        System.out.println(fileName);
+//        System.out.println(contentType);
 
 
 
@@ -40,31 +40,5 @@ public class FileController {
         String [] str = {"/imgupload/" +  fileName};
         return ImageResultUtil.success(str);
     }
-//    @RequestMapping(value="/upload", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String upload(@RequestParam("name") String name,@RequestParam("filename") String fileName,
-//                            HttpServletRequest request) {
-//
-//        String filePath = request.getSession().getServletContext().getRealPath("imgupload/");
-//
-//        //filePath="C:/Download/";
-//        System.out.println(filePath);
-//        System.out.println(fileName);
-//        System.out.println();
-//
-//
-//        //返回json
-//        return "{" +
-//
-//                "\"errno\": 0," +
-//
-//
-//                "\"data\": [" +
-//                "\"" +
-//                filePath +
-//                "\"," +
-//
-//                "]" +
-//                "}";
-//    }
+
 }

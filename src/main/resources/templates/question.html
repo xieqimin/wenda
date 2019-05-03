@@ -20,31 +20,26 @@
 
 <!--<textarea class="form-control" rows="3" name=textarea></textarea>-->
 
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
-    <a class="navbar-brand" href="/" style="margin-left: 90px">Wen</a>
-    <ul class="navbar-nav">
+<nav class="navbar navbar-expand-sm bg-light navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="/" style="margin-left: 90px">问答</a>
+    <a class="nav-link" href="/editquestion">提问</a>
+    <form action="/query" style="margin-left: 400px" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="搜索相关问题" aria-label="Search" name="word">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <a class="nav-link "  th:if="${login}" th:text="${user_name}">用户名</a>
 
 
-        <li class="nav-item" style="margin-right: 850px">
-            <a class="nav-link" href="/editquestion">提问</a>
-        </li>
-        <form action="/query" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="word">
-            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <li class="nav-item">
-            <p class="nav-link " th:if="${login}" th:text="${user_name}">用户名</p>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " th:if="${login}" href="/out" >退出登陆</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " th:if="!${login}" href="/login.html">登陆</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link"   th:if="!${login}"href="/register.html">注册</a>
-        </li>
-    </ul>
+    <a class="nav-link " th:if="${login}" href="/out" >退出登陆</a>
+
+
+    <a class="nav-link " th:if="!${login}" href="/login.html">登陆</a>
+
+
+    <a class="nav-link"   th:if="!${login}"href="/register.html">注册</a>
+
+
 </nav>
 <div class="container">
 

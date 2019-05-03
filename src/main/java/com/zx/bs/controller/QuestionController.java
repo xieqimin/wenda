@@ -121,11 +121,12 @@ public class QuestionController {
 
     @RequestMapping(value="/user/{id}", method = {RequestMethod.GET})
     //???连带问题 用户界面
-    @ResponseBody
-    public List<Answer> findAnswerByUserId(@PathVariable("id") Integer id){
+    public ModelAndView findAnswerByUserId(@PathVariable("id") Integer id,Map<String,Object> map){
         List<Question> questionList= questionService.findQuestionByUserId(id);
         List<Answer> answerList=answerService.findAnswerByUserId(id);
-        return answerList;
+        map.put("answers",answerList);
+        map.put("question",questionList);
+        return new ModelAndView("user",map);
     }
 
     @RequestMapping(value="/remove/question/{id}", method = {RequestMethod.GET})

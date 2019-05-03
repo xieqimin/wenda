@@ -47,4 +47,5 @@ public class QuestionService {
         String str="%"+word+"%";
         return questionDao.queryQuestion(str);
     }
+
 }
