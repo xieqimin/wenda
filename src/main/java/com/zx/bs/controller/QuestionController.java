@@ -38,6 +38,7 @@ public class QuestionController {
         if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
         {
             map.put("login", true);
+            map.put("user_id",session.getAttribute("user_id"));
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -53,6 +54,7 @@ public class QuestionController {
         if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
         {
             map.put("login", true);
+            map.put("user_id",session.getAttribute("user_id"));
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -67,6 +69,7 @@ public class QuestionController {
         if(session.getAttribute("user_id")!=null)
         {
             map.put("login", true);
+            map.put("user_id",session.getAttribute("user_id"));
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -103,6 +106,7 @@ public class QuestionController {
         map.put("answers",answerList);
         if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
         {
+            map.put("user_id",session.getAttribute("user_id"));
             map.put("login", true);
             map.put("user_name",session.getAttribute("user_name"));
         }else {
@@ -116,7 +120,6 @@ public class QuestionController {
     public ModelAndView changeQuestionById(@PathVariable("id") Integer id ,HttpSession session, Map<String,Object> map){
         //TODO
         Question question= questionService.findQuestionById(id);
-
         map.put("question",question);
         if(session.getAttribute("user_id")!=null) {
             if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
@@ -124,7 +127,7 @@ public class QuestionController {
                 map.put("user_name",session.getAttribute("user_name"));
                 return new ModelAndView("updatequestion",map);
             }else {
-                return new ModelAndView("nologin",map);
+                return new ModelAndView("noahu",map);
             }
 
         }else {
@@ -133,14 +136,14 @@ public class QuestionController {
 
     }
 
-    @RequestMapping(value="/updatequestion/{id}", method = {RequestMethod.POST})
+    @RequestMapping(value="/question/update/{id}", method = {RequestMethod.POST})
     //TODO ???是否返回界面
     @ResponseBody
-    public String updateQuestion(@PathVariable("id") Integer id ,String question_conent,HttpSession session){
+    public String updateQuestion(@PathVariable("id") Integer id ,String question_content,HttpSession session){
         if(session.getAttribute("user_id")!=null) {
             Question question= questionService.findQuestionById(id);
             if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
-                question.setQuestion_conent(question_conent);
+                question.setQuestion_conent(question_content);
                 Integer result=questionService.updateQuestion(question);
                 return ""+result;
             }else {

@@ -41,4 +41,8 @@ public class AnswerService {
     public Integer removeAnswerById(Integer id){
         return answerDao.removeAnswerById(id);
     }
+
+    public Integer updateAnswer(Answer answer){
+        return answerDao.updateAnswer(answer);
+    }
 }

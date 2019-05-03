@@ -1,6 +1,7 @@
 package com.zx.bs.controller;
 
 import com.zx.bs.model.Answer;
+import com.zx.bs.model.Question;
 import com.zx.bs.model.User;
 import com.zx.bs.service.AnswerService;
 import com.zx.bs.service.QuestionService;
@@ -8,9 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 //TODO 编写回答
 @Slf4j
@@ -48,10 +51,20 @@ public class AnswerController {
     //通过回答id查询回答
     @RequestMapping(value="/answer/{id}", method = {RequestMethod.GET})
     //TODO ???是否返回界面
-    @ResponseBody
-    public Answer findAnswerById(@PathVariable("id") Integer id){
+    public ModelAndView findAnswerById(@PathVariable("id") Integer id,Map<String,Object> map,HttpSession session){
         //TODO
-        return answerService.findAnswerById(id);
+        if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
+        {
+            map.put("login", true);
+            map.put("user_name",session.getAttribute("user_name"));
+            map.put("user_id",session.getAttribute("user_id"));
+        }else {
+            map.put("login", false);
+        }
+        Answer answer= answerService.findAnswerById(id);
+        map.put("answer",answer);
+        return new ModelAndView("answer",map);
+
     }
 
     //通过问题id查询回答，返回该问题的所有回答的列表
@@ -89,6 +102,49 @@ public class AnswerController {
         }
         if(result!=1)
             return "失败";
-        else return "成功";
+        else
+            return "成功";
+    }
+    @RequestMapping(value="/answer/change/{id}", method = {RequestMethod.GET})
+    //TODO ???是否返回界面 是否返回回答列表 是 是
+    public ModelAndView changeAnswerById(@PathVariable("id") Integer id , HttpSession session, Map<String,Object> map){
+        //TODO
+        Answer answer= answerService.findAnswerById(id);
+        map.put("answer",answer);
+        if(session.getAttribute("user_id")!=null) {
+            if(session.getAttribute("user_id").equals(answer.getUser().getUser_id())){
+                map.put("login", true);
+                map.put("user_name",session.getAttribute("user_name"));
+                map.put("user_id",session.getAttribute("user_id"));
+                return new ModelAndView("updateanswer",map);
+            }else {
+                return new ModelAndView("noahu",map);
+            }
+
+        }else {
+            return new ModelAndView("nologin",map);
+        }
+
+    }
+
+    @RequestMapping(value="/answer/update/{id}", method = {RequestMethod.POST})
+    //TODO ???是否返回界面
+    @ResponseBody
+    public String updateAnswer(@PathVariable("id") Integer id ,String answer_content,HttpSession session){
+        if(session.getAttribute("user_id")!=null) {
+            Answer answer= answerService.findAnswerById(id);
+            if(session.getAttribute("user_id").equals(answer.getUser().getUser_id())){
+                answer.setAnswer_content(answer_content);
+                Integer result=answerService.updateAnswer(answer);
+                return ""+result;
+            }else {
+                //不是自己的问题
+                return "-2";
+            }
+        }else {
+            //没有登陆
+            return "-1";
+        }
+
     }
 }

@@ -25,7 +25,6 @@ public interface AnswerDao {
     @Select("select * from question where user_id=#{id} and question_id={q_id}")
     List<Answer> findAnswerByUserAndQuestionId(@Param("id") Integer id, @Param("q_id") Integer q_id);
 
-
     @Delete("delete from answer where answer_id =#{id}")
     Integer removeAnswerById(@Param("id") Integer id);
 }
