@@ -111,12 +111,47 @@ public class QuestionController {
         return new ModelAndView("question",map);
     }
 
-    @RequestMapping(value="/updatequestion/{id}", method = {RequestMethod.GET})
+    @RequestMapping(value="/question/change/{id}", method = {RequestMethod.GET})
+    //TODO ???是否返回界面 是否返回回答列表 是 是
+    public ModelAndView changeQuestionById(@PathVariable("id") Integer id ,HttpSession session, Map<String,Object> map){
+        //TODO
+        Question question= questionService.findQuestionById(id);
+
+        map.put("question",question);
+        if(session.getAttribute("user_id")!=null) {
+            if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
+                map.put("login", true);
+                map.put("user_name",session.getAttribute("user_name"));
+                return new ModelAndView("updatequestion",map);
+            }else {
+                return new ModelAndView("nologin",map);
+            }
+
+        }else {
+            return new ModelAndView("nologin",map);
+        }
+
+    }
+
+    @RequestMapping(value="/updatequestion/{id}", method = {RequestMethod.POST})
     //TODO ???是否返回界面
     @ResponseBody
-    public String updateQuestion(Question question){
-        Integer result=questionService.updateQuestion(question);
-        return ""+result;
+    public String updateQuestion(@PathVariable("id") Integer id ,String question_conent,HttpSession session){
+        if(session.getAttribute("user_id")!=null) {
+            Question question= questionService.findQuestionById(id);
+            if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
+                question.setQuestion_conent(question_conent);
+                Integer result=questionService.updateQuestion(question);
+                return ""+result;
+            }else {
+                //不是自己的问题
+                return "-2";
+            }
+        }else {
+            //没有登陆
+            return "-1";
+        }
+
     }
 
     @RequestMapping(value="/user/{id}", method = {RequestMethod.GET})

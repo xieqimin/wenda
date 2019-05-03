@@ -36,13 +36,14 @@
 </nav>
 <div class="container"  id="app">
 
-    <div style="min-height: 800px" id="editor"></div>
+    <div style="min-height: 500px" id="editor" class="toolbar"></div>
+
     <button id="button" class="btn btn-primary">提交</button>
 </div>
 
 <script type="text/javascript">
     var E = window.wangEditor
-    var editor = new E('#editor')
+    var editor = new E('#editor');
     editor.customConfig.menus = [
         'head',  // 标题
         'bold',  // 粗体
@@ -65,11 +66,13 @@
         'undo',  // 撤销
         'redo'  // 重复
     ]
-    editor.customConfig.uploadImgServer = '/uploadimg'
-    editor.customConfig.uploadFileName = 'myFileName'
+    editor.customConfig.uploadImgServer = '/uploadimg';
+    editor.customConfig.uploadFileName = 'myFileName';
     //editor.customConfig.uploadImgParamsWithUrl = true
-    editor.customConfig.debug =true
-    editor.create()
+    editor.customConfig.debug =true;
+
+    editor.create();
+
     document.getElementById('button').addEventListener('click', function () {
         // 读取 text
 

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请先登陆</title>
+</head>
+<body>
+<p>
+    请先登陆，5s后跳装到登陆界面
+</p>
+</body>
+<script>
+    function goTo(url){
+        window.location.href=url;
+    }
+    setTimeout("goTo('/login.html')",5000);
+</script>
+</html>
