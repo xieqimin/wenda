@@ -159,12 +159,23 @@ public class QuestionController {
 
     @RequestMapping(value="/user/{id}", method = {RequestMethod.GET})
     //???连带问题 用户界面
-    public ModelAndView findAnswerByUserId(@PathVariable("id") Integer id,Map<String,Object> map){
+    public ModelAndView findAnswerByUserId(@PathVariable("id") Integer id,Map<String,Object> map,HttpSession session){
+
         List<Question> questionList= questionService.findQuestionByUserId(id);
         List<Answer> answerList=answerService.findAnswerByUserId(id);
-        map.put("answers",answerList);
-        map.put("question",questionList);
-        return new ModelAndView("user",map);
+        if(session.getAttribute("user_id")!=null&&session.getAttribute("user_id").equals(""+id))
+        {
+            map.put("user_id",session.getAttribute("user_id"));
+            map.put("login", true);
+            map.put("user_name",session.getAttribute("user_name"));
+            map.put("answers",answerList);
+            map.put("question",questionList);
+            return new ModelAndView("user",map);
+        }else {
+            map.put("login", false);
+            return new ModelAndView("noahu",map);
+        }
+
     }
 
     @RequestMapping(value="/remove/question/{id}", method = {RequestMethod.GET})

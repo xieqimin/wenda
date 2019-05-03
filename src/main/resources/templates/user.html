@@ -12,7 +12,7 @@
     <style>
         @import url("//unpkg.com/element-ui@2.8.2/lib/theme-chalk/index.css");
         .el-header, .el-footer {
-            background-color: #B3C0D1;
+            background-color: #F6F6F6;
             color: #333;
             text-align: center;
             line-height: 60px;
@@ -26,7 +26,7 @@
         }
 
         .el-main {
-            background-color: #E9EEF3;
+            background-color: #F6F6F6;
             color: #333;
             text-align: center;
 
@@ -53,7 +53,20 @@
 <div id="app">
 
     <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" >
+                <el-menu-item index="1" style="margin-left: 180px" ><el-link class="navbar-brand" href="/" >问答</el-link></el-menu-item>
+                <el-menu-item index="2"><el-link class="nav-link" href="/editquestion">提问</el-link></el-menu-item>
+                <el-menu-item index="3" style="margin-left: 580px">
+                    <el-link class="nav-link "  th:if="${login}" th:href="@{/user/{userid}(userid=${user_id})}" th:text="${user_name}">用户名</el-link>
+                    <el-link class="nav-link " th:if="!${login}" href="/login.html">登陆</el-link>
+                </el-menu-item>
+                <el-menu-item index="4">
+                    <el-link class="nav-link " th:if="${login}" href="/out" >退出登陆</el-link>
+                    <el-link class="nav-link"   th:if="!${login}" href="/register.html">注册</el-link>
+                </el-menu-item>
+            </el-menu>
+        </el-header>
         <el-container>
             <el-aside width="200px"></el-aside>
             <el-container>
@@ -66,6 +79,7 @@
                                         <p class="card-text" th:utext="${qu.question_conent}">Some example text. Some example text.</p>
                                         <!--<a href="/question/{qu.question_id}" class="card-link">Card link</a>-->
                                     <el-link type="primary" th:href="@{/question/{questionid}(questionid=${qu.question_id})}" class="card-link">查看回答</el-link>
+                                    <el-link type="primary" th:href="@{/question/change/{questionid}(questionid=${qu.question_id})}" class="card-link">修改回答</el-link>
                                 </el-card>
                             </td>
                         </tr>
@@ -77,11 +91,12 @@
                                     <p class="card-text" th:utext="${ans.answer_content}">Some example text. Some example text.</p>
                                          <!--<a href="/question/{qu.question_id}" class="card-link">Card link</a>-->
                                     <el-link type="primary" th:href="@{/remove/answer/{answerid}(answerid=${ans.answer_id})}" >删除回答</el-link>
+                                    <el-link type="primary" th:href="@{/answer/change/{answerid}(answerid=${ans.answer_id})}" >修改回答</el-link>
                                 </el-card>
                             </td>
                         </tr>
                     </el-tab-pane>
-                        <el-tab-pane label="个人信息"></el-tab-pane>
+<!--                        <el-tab-pane label="个人信息"></el-tab-pane>-->
                 </el-tabs>
                 </el-main>
 
