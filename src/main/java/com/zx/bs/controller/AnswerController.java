@@ -33,9 +33,9 @@ public class AnswerController {
         log.info(""+answer);
         //TODO 前端测试
         Integer result;
-        if(session.getAttribute("user_id")!=null){
+        if(session.getAttribute("user_name")!=null){
             User user=new User();
-            user.setUser_id((String) session.getAttribute("user_id"));
+            user.setName((String) session.getAttribute("user_name"));
 
             answer.setUser(user);
 
@@ -53,11 +53,11 @@ public class AnswerController {
     //TODO ???是否返回界面
     public ModelAndView findAnswerById(@PathVariable("id") Integer id,Map<String,Object> map,HttpSession session){
         //TODO
-        if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
+        if(session.getAttribute("user_name")!=null)
         {
             map.put("login", true);
             map.put("user_name",session.getAttribute("user_name"));
-            map.put("user_id",session.getAttribute("user_id"));
+
         }else {
             map.put("login", false);
         }
@@ -78,7 +78,7 @@ public class AnswerController {
     @RequestMapping(value="/answerFind/User/{id}", method = {RequestMethod.GET})
     //???连带问题 用户界面
     @ResponseBody
-    public List<Answer> findAnswerByStudentId(@PathVariable("id") Integer id){
+    public List<Answer> findAnswerByStudentId(@PathVariable("id") String id){
 
         return answerService.findAnswerByUserId(id);
     }
@@ -89,11 +89,11 @@ public class AnswerController {
     public String removeAnswerById(@PathVariable("id") Integer id,HttpSession session){
         //TODO
         int result=-1;
-        Integer aid=(Integer) session.getAttribute("admin_id");
+        Integer aid=(Integer) session.getAttribute("user_name");
         if(aid==null){
             Answer answer=answerService.findAnswerById(id);
-            String uid=(String) session.getAttribute("user_id");
-            if(answer!=null&&answer.getUser().getUser_id().equals(uid))
+            String uid=(String) session.getAttribute("user_name");
+            if(answer!=null&&answer.getUser().getName().equals(uid))
                 result= answerService.removeAnswerById(id);
         }
         else {
@@ -110,11 +110,11 @@ public class AnswerController {
         //TODO
         Answer answer= answerService.findAnswerById(id);
         map.put("answer",answer);
-        if(session.getAttribute("user_id")!=null) {
-            if(session.getAttribute("user_id").equals(answer.getUser().getUser_id())){
+        if(session.getAttribute("user_name")!=null) {
+            if(session.getAttribute("user_name").equals(answer.getUser().getName())){
                 map.put("login", true);
                 map.put("user_name",session.getAttribute("user_name"));
-                map.put("user_id",session.getAttribute("user_id"));
+
                 return new ModelAndView("updateanswer",map);
             }else {
                 return new ModelAndView("noahu",map);
@@ -130,9 +130,9 @@ public class AnswerController {
     //TODO ???是否返回界面
     @ResponseBody
     public String updateAnswer(@PathVariable("id") Integer id ,String answer_content,HttpSession session){
-        if(session.getAttribute("user_id")!=null) {
+        if(session.getAttribute("user_name")!=null) {
             Answer answer= answerService.findAnswerById(id);
-            if(session.getAttribute("user_id").equals(answer.getUser().getUser_id())){
+            if(session.getAttribute("user_name").equals(answer.getUser().getName())){
                 answer.setAnswer_content(answer_content);
                 Integer result=answerService.updateAnswer(answer);
                 return ""+result;

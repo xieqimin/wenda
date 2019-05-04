@@ -10,7 +10,7 @@
     <title>欢迎登陆</title>
     <style type="text/css">
         body{
-            background-image:url(image/3.jpg);
+            
             background-color:#F6F6F6;
         }
     </style>
@@ -22,7 +22,7 @@
         <h1 class="text-center" style="margin-top: 40px">登陆</h1>
         <form action="/login" method="post" >
             <div class="form-group-lg">
-                <label  for="email"><h3>账户</h3></label>
+                <label  for="email"><h3>用户名</h3></label>
                 <input type="text" class="form-control" id="email" name="user_id" />
             </div>
             <div class="form-group-lg">
@@ -54,8 +54,8 @@
                     type: 'POST', //GET
                     async: true,    //或false,是否异步
                     data: {
-                        user_id: dataid,
-                        user_passwd: datapwd
+                        name: dataid,
+                        password: datapwd
                     },
                     timeout: 5000,    //超时时间
                     dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text

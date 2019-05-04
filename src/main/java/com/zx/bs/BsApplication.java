@@ -3,7 +3,7 @@ package com.zx.bs;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//TODO 搜索提示
+//TODO 搜索提示 搜索为空
 // 删除弹窗
 // 提问按钮和跳转
 // 个人中心  多个页面

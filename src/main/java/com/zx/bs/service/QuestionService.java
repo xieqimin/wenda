@@ -24,7 +24,7 @@ public class QuestionService {
         return integer;
     }
 
-    public List<Question> findQuestionByUserId(int id){
+    public List<Question> findQuestionByUserId(String id){
         List<Question> questionList=questionDao.findQuestionByUserId(id);
         return questionList;
     }

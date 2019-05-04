@@ -16,17 +16,14 @@
            <h1 class="text-center" style="margin-top: 40px">注册</h1>
            <form action="/registered" method="post" >
                <div class="form-group-lg">
-                   <label for="email"><h3>账户</h3></label>
+                   <label for="email"><h3>用户名</h3></label>
                    <input type="text" class="form-control" id="email" />
                </div>
                <div class="form-group-lg">
                     <label for="password"><h3>密码</h3></label>
                     <input type="password" class="form-control" id="password" />
                </div >
-               <div class="form-group-lg">
-                   <label for="name"><h3>昵称</h3></label>
-                   <input type="text" class="form-control" id="name" />
-               </div >
+
 
            </form>
            <div id="app" class="form-group-lg">
@@ -46,15 +43,15 @@
                refreshMessage: function (){
                    var dataid=$("input#email").val();
                    var datapsw=$("input#password").val();
-                   var dataname=$("input#name").val();
+
                    $.ajax({
                        url:'/registered',
                        type:'POST', //GET
                        async:true,    //或false,是否异步
                        data:{
-                           user_id:dataid,
-                           user_passwd:datapsw,
-                           user_name:dataname
+                           name:dataid,
+                           password:datapsw,
+
                        },
                        timeout:5000,    //超时时间
                        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text

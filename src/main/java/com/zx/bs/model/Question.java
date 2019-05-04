@@ -7,7 +7,7 @@ import lombok.Data;
 public class Question {
 
     private int question_id;
-    private String question_conent;
+    private String question_content;
     private User user;
 
 }

@@ -35,10 +35,10 @@ public class QuestionController {
         //TODO
         List<Question> questionList=questionService.findQuestion();
         map.put("question",questionList);
-        if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
+        if(session.getAttribute("user_name")!=null)
         {
             map.put("login", true);
-            map.put("user_id",session.getAttribute("user_id"));
+
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -51,10 +51,10 @@ public class QuestionController {
         //TODO
         List<Question> questionList=questionService.queryQuestion(word);
         map.put("question",questionList);
-        if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
+        if(session.getAttribute("user_name")!=null||session.getAttribute("admin_id")!=null)
         {
             map.put("login", true);
-            map.put("user_id",session.getAttribute("user_id"));
+
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -66,10 +66,10 @@ public class QuestionController {
     public ModelAndView editquestion(Map<String,Object> map, HttpSession session){
         //TODO
 
-        if(session.getAttribute("user_id")!=null)
+        if(session.getAttribute("user_name")!=null)
         {
             map.put("login", true);
-            map.put("user_id",session.getAttribute("user_id"));
+
             map.put("user_name",session.getAttribute("user_name"));
         }else {
             map.put("login", false);
@@ -83,9 +83,9 @@ public class QuestionController {
     public Integer addQusetion(Question question , HttpSession session){
         //TODO userid
         Integer result;
-        if(session.getAttribute("user_id")!=null){
+        if(session.getAttribute("user_name")!=null){
             User user=new User();
-            user.setUser_id((String)session.getAttribute("user_id"));
+            user.setName((String)session.getAttribute("user_name"));
             question.setUser(user);
             result=questionService.insertQuestion(question);
         }
@@ -104,9 +104,9 @@ public class QuestionController {
         List<Answer> answerList=answerService.findAnswerByQuestionId(id);
         map.put("question",question);
         map.put("answers",answerList);
-        if(session.getAttribute("user_id")!=null||session.getAttribute("admin_id")!=null)
+        if(session.getAttribute("user_name")!=null)
         {
-            map.put("user_id",session.getAttribute("user_id"));
+
             map.put("login", true);
             map.put("user_name",session.getAttribute("user_name"));
         }else {
@@ -121,8 +121,8 @@ public class QuestionController {
         //TODO
         Question question= questionService.findQuestionById(id);
         map.put("question",question);
-        if(session.getAttribute("user_id")!=null) {
-            if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
+        if(session.getAttribute("user_name")!=null) {
+            if(session.getAttribute("user_name").equals(question.getUser().getName())){
                 map.put("login", true);
                 map.put("user_name",session.getAttribute("user_name"));
                 return new ModelAndView("updatequestion",map);
@@ -140,10 +140,10 @@ public class QuestionController {
     //TODO ???是否返回界面
     @ResponseBody
     public String updateQuestion(@PathVariable("id") Integer id ,String question_content,HttpSession session){
-        if(session.getAttribute("user_id")!=null) {
+        if(session.getAttribute("user_name")!=null) {
             Question question= questionService.findQuestionById(id);
-            if(session.getAttribute("user_id").equals(question.getUser().getUser_id())){
-                question.setQuestion_conent(question_content);
+            if(session.getAttribute("user_name").equals(question.getUser().getName())){
+                question.setQuestion_content(question_content);
                 Integer result=questionService.updateQuestion(question);
                 return ""+result;
             }else {
@@ -159,13 +159,13 @@ public class QuestionController {
 
     @RequestMapping(value="/user/{id}", method = {RequestMethod.GET})
     //???连带问题 用户界面
-    public ModelAndView findAnswerByUserId(@PathVariable("id") Integer id,Map<String,Object> map,HttpSession session){
+    public ModelAndView findAnswerByUserId(@PathVariable("id") String id,Map<String,Object> map,HttpSession session){
 
         List<Question> questionList= questionService.findQuestionByUserId(id);
         List<Answer> answerList=answerService.findAnswerByUserId(id);
-        if(session.getAttribute("user_id")!=null&&session.getAttribute("user_id").equals(""+id))
+        if(session.getAttribute("user_name")!=null&&session.getAttribute("user_name").equals(id))
         {
-            map.put("user_id",session.getAttribute("user_id"));
+
             map.put("login", true);
             map.put("user_name",session.getAttribute("user_name"));
             map.put("answers",answerList);
@@ -183,11 +183,11 @@ public class QuestionController {
     @ResponseBody
     public Integer removeQuestionById(@PathVariable("id") Integer id,HttpSession session){
         //TODO
-        Integer aid=(Integer) session.getAttribute("admin_id");
+        Integer aid=(Integer) session.getAttribute("user_name");
         if(aid==null){
             Question answer=questionService.findQuestionById(id);
-            String uid=(String) session.getAttribute("user_id");
-            if(answer!=null&&answer.getUser().getUser_id().equals(uid))
+            String uid=(String) session.getAttribute("user_name");
+            if(answer!=null&&answer.getUser().getName().equals(uid))
                 return questionService.removeQuestionById(id);
             else {
                 return -1;

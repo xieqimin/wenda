@@ -15,7 +15,7 @@ public class UserService {
     public Integer findUserByIdAndPasswd(String id, String pwd) {
         User user = userDao.findUserById(id);
         if (user != null)
-            if (user.getUser_passwd().equals(pwd))
+            if (user.getPassword().equals(pwd))
                 return 1;
             else
                 return -1;//密码错误

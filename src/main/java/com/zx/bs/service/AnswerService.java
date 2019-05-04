@@ -26,7 +26,7 @@ public class AnswerService {
         return integer;
     }
 
-    public List<Answer> findAnswerByUserId(int id){
+    public List<Answer> findAnswerByUserId(String id){
         List<Answer> answerList=answerDao.findAnswerByUserId(id);
         return answerList;
     }
