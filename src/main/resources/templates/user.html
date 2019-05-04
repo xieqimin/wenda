@@ -78,8 +78,8 @@
                                 <el-card class="box-card" style="margin-bottom: 10px; margin-top: 20px">
                                         <p class="card-text" th:utext="${qu.question_content}">Some example text. Some example text.</p>
                                         <!--<a href="/question/{qu.question_id}" class="card-link">Card link</a>-->
-                                    <el-link type="primary" th:href="@{/question/{questionid}(questionid=${qu.question_id})}" class="card-link">查看回答</el-link>
-                                    <el-link type="primary" th:href="@{/question/change/{questionid}(questionid=${qu.question_id})}" class="card-link">修改回答</el-link>
+                                    <el-link type="primary" th:href="@{/question/{questionid}(questionid=${qu.question_id})}" class="card-link">查看提问</el-link>
+                                    <el-link type="primary" th:href="@{/question/change/{questionid}(questionid=${qu.question_id})}" class="card-link">修改提问</el-link>
                                 </el-card>
                             </td>
                         </tr>

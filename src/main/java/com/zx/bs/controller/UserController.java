@@ -33,25 +33,21 @@ public class UserController {
         }
         return result;
     }
-    //TODO
-    //
+
+
     @RequestMapping(value="/registered", method = {RequestMethod.POST})
     @ResponseBody
     public Integer addUser(User user, HttpSession session){
         Integer result= userService.insertUser(user);
         if(result==1) {
-            //return "redirect:/";
             session.setAttribute("user_name",user.getName());
-//            map.put("user_name",user1.getUser_name());
-//            map.put("question",questionService.findQuestion());
-//            map.put("login",true);
         }
         return result;
     }
 
     //推出登陆
     @RequestMapping(value="/out")
-    public String UserOut(HttpSession session){
+    public String userOut(HttpSession session){
         session.removeAttribute("user_name");
         return "redirect:/login.html";
     }

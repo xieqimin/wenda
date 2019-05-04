@@ -24,7 +24,7 @@ public interface QuestionDao {
     @Delete("delete from question where question_id =#{id}")
     Integer removeQuestionById(@Param("id") Integer  id);
 
-    //TODO
+
     @Select("select question_id, question_content,user_name 'user.name'  from question  where question_content like  #{word} ;")
     List<Question> queryQuestion(@Param("word") String ser);
 }

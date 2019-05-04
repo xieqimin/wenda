@@ -18,7 +18,7 @@ public interface AnswerDao {
 
     @Select("select answer_id, question_id, answer_content,user_name 'user.name'  from answer  where question_id=#{id} ORDER BY  answer.answer_id DESC")
     List<Answer> findAnswerByQuestionId(@Param("id") Integer id);
-    //
+
     @Select("select * from answer where user_name=#{id}")
     List<Answer> findAnswerByUserId(@Param("id") String id);
 

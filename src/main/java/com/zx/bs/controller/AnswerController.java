@@ -31,7 +31,6 @@ public class AnswerController {
     public Integer addAnswer (Answer answer ,HttpSession session){
 
         log.info(""+answer);
-        //TODO 前端测试
         Integer result;
         if(session.getAttribute("user_name")!=null){
             User user=new User();
@@ -50,7 +49,6 @@ public class AnswerController {
 
     //通过回答id查询回答
     @RequestMapping(value="/answer/{id}", method = {RequestMethod.GET})
-    //TODO ???是否返回界面
     public ModelAndView findAnswerById(@PathVariable("id") Integer id,Map<String,Object> map,HttpSession session){
         //TODO
         if(session.getAttribute("user_name")!=null)
@@ -68,7 +66,6 @@ public class AnswerController {
 
     //通过问题id查询回答，返回该问题的所有回答的列表
     @RequestMapping(value="/answerFind/{id}", method = {RequestMethod.GET})
-    //???
     @ResponseBody
     public List<Answer> findAnswerByQuestionId(@PathVariable("id") Integer id){
         return answerService.findAnswerByQuestionId(id);
@@ -76,7 +73,6 @@ public class AnswerController {
 
     //通过用户id查询回答，返回该学生的所有回答的列表
     @RequestMapping(value="/answerFind/User/{id}", method = {RequestMethod.GET})
-    //???连带问题 用户界面
     @ResponseBody
     public List<Answer> findAnswerByStudentId(@PathVariable("id") String id){
 

@@ -30,7 +30,6 @@ public class QuestionController {
     private AnswerService answerService;
 
     @RequestMapping(value="/")
-    //TODO ???是否返回界面 是否返回回答列表
     public ModelAndView index(Map<String,Object> map, HttpSession session){
         //TODO
         List<Question> questionList=questionService.findQuestion();
@@ -46,7 +45,6 @@ public class QuestionController {
         return new ModelAndView("index",map);
     }
     @RequestMapping(value="/query")
-    //TODO ???是否返回界面 是否返回回答列表
     public ModelAndView query(String word,Map<String,Object> map, HttpSession session){
         //TODO
         List<Question> questionList=questionService.queryQuestion(word);
@@ -62,7 +60,6 @@ public class QuestionController {
         return new ModelAndView("query",map);
     }
     @RequestMapping(value="/editquestion")
-    //TODO ???是否返回界面 是否返回回答列表
     public ModelAndView editquestion(Map<String,Object> map, HttpSession session){
         //TODO
 
@@ -97,7 +94,6 @@ public class QuestionController {
 
     //通过问题id查询问题
     @RequestMapping(value="/question/{id}", method = {RequestMethod.GET})
-    //TODO ???是否返回界面 是否返回回答列表 是 是
     public ModelAndView findQuestionById(@PathVariable("id") Integer id ,HttpSession session, Map<String,Object> map){
         //TODO
         Question question= questionService.findQuestionById(id);
@@ -116,7 +112,6 @@ public class QuestionController {
     }
 
     @RequestMapping(value="/question/change/{id}", method = {RequestMethod.GET})
-    //TODO ???是否返回界面 是否返回回答列表 是 是
     public ModelAndView changeQuestionById(@PathVariable("id") Integer id ,HttpSession session, Map<String,Object> map){
         //TODO
         Question question= questionService.findQuestionById(id);
@@ -179,7 +174,6 @@ public class QuestionController {
     }
 
     @RequestMapping(value="/remove/question/{id}", method = {RequestMethod.GET})
-    //TODO ???是否返回界面
     @ResponseBody
     public Integer removeQuestionById(@PathVariable("id") Integer id,HttpSession session){
         //TODO

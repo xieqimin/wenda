@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // 提问按钮和跳转
 // 个人中心  多个页面
 // 删除回答链接显示
-// 登陆界面加图片
-// 问题回答修改界面  editor.txt.html('<p>用 JS 设置的内容</p>')
+
 
 // 空的回答 显示回答列表
 // 点赞
