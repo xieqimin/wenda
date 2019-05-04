@@ -89,16 +89,14 @@ public class AnswerController {
     public String removeAnswerById(@PathVariable("id") Integer id,HttpSession session){
         //TODO
         int result=-1;
-        Integer aid=(Integer) session.getAttribute("user_name");
-        if(aid==null){
+        String userName =(String) session.getAttribute("user_name");
+        if(userName!=null){
             Answer answer=answerService.findAnswerById(id);
-            String uid=(String) session.getAttribute("user_name");
-            if(answer!=null&&answer.getUser().getName().equals(uid))
+
+            if(answer!=null&&answer.getUser().getName().equals(userName))
                 result= answerService.removeAnswerById(id);
         }
-        else {
-            result = answerService.removeAnswerById(id);
-        }
+
         if(result!=1)
             return "失败";
         else
