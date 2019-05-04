@@ -102,8 +102,8 @@ public class AnswerController {
         else
             return "成功";
     }
+
     @RequestMapping(value="/answer/change/{id}", method = {RequestMethod.GET})
-    //TODO ???是否返回界面 是否返回回答列表 是 是
     public ModelAndView changeAnswerById(@PathVariable("id") Integer id , HttpSession session, Map<String,Object> map){
         //TODO
         Answer answer= answerService.findAnswerById(id);
